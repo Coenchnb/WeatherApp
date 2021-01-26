@@ -1,0 +1,64 @@
+<!-- File for forecast weather page where the base.html is implemented -->
+
+{% extends "current_page1/Base.html" %}
+
+  {% block title %}
+  <title>
+    Weersvoorspelling
+  </title>
+  {% endblock %}
+
+<!--***************************************************************-->
+
+  {% block navbar %}
+  <div class="header-right">
+    <a href="{% url 'home' %}">Huidig weerbeeld</a>
+    <a class="active" href="{% url 'weekly-forecast' %}">Zevendaags weerbeeld</a>
+    <a href="{% url 'radar' %}">Regenradar</a>
+  </div>
+  {% endblock %}
+
+<!--***************************************************************-->
+
+      {% block info_card %}
+      <div class="card">
+        <p>
+          Welkom op onze website! In de onderstaande zoekbalk kunt u de gewenste stad invoeren voor de weersvoorspelling.
+        </p>
+      </div>
+      {% endblock %}
+
+        {% block form %}
+          <form action="/forecast_city/" method="post" class="col-md">
+            {% csrf_token %}
+            <div class="import-group">
+              <input id="" type="text" class="form-control" name="city_name" placeholder="Kies je plaatsnaam: ">
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-primary">Zoek</button>
+              </div>
+            </div>
+          </form>
+          {% endblock %}
+
+
+      {% block weather_info %}
+
+        {% for data in all_data %}
+      <div class="card">
+        <div class ="card-body">
+          <h4><span class="badge-primary">Dag van de week:</span> {{all_data.day}}</h4>
+          <h4><span class="badge-primary">Verwachte temperatuur:</span> {{all_data.forecast_temperature}} graden celcius</h4>
+          <h4><span class="badge-primary">Verwachte luchtvochtigheid:</span> {{all_data.forecast_humidity}}%</h4>
+          <h4><span class="badge-primary">Verwachte weersomstandigheid:</span> {{all_data.forecast_circumstance}}</h4>
+          <h4><span class="badge-primary">Verwachte UV-index:</span> {{all_data.forecast_uvi}} </h4>
+          <h4><span class="badge-primary">Verwachte Windrichting:</span> {{all_data.forecast_winddegree}}</h4>
+          <h4><span class="badge-primary">Verwachte windsnelheid:</span> {{all_data.forecast_windspeed}}</h4>
+        </div>
+      </div>
+        {% endfor %}
+
+      {% endblock %}
+
+
+<!--***************************************************************-->
+
